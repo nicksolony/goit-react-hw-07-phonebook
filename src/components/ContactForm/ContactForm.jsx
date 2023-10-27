@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import {Form} from './ContactForm.styled'
-import { useDispatch, useSelector } from 'react-redux';
-// import { contactsSelector, addContact } from 'redux/contacts/contactsSlice';
 import { useAddContactMutation } from "redux/contacts/contactsSlice";
 import { toast } from "react-hot-toast";
 

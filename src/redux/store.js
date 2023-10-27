@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 // import { persistStore, persistReducer,PERSIST } from 'reduxjs-toolkit-persist';
 // import storage from 'reduxjs-toolkit-persist/lib/storage';
 // import { contactsReducer } from "./contacts/contactsSlice";
