@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { filterSelector } from 'redux/filter/filterSlice';
 import { useGetContactsQuery } from "redux/contacts/contactsSlice";
 import { ThreeDots } from 'react-loader-spinner';
+import { Toaster } from 'react-hot-toast';
 
 
 export const App = () => {
@@ -26,8 +27,9 @@ export const App = () => {
         color: '#010101'
       }}
       >
+        <div><Toaster/></div>
         <h2>Phonebook</h2>
-        <ContactForm />
+        <ContactForm contacts={contacts}/>
 
         <h2>Contacts</h2>
 

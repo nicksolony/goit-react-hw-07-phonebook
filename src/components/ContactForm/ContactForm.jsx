@@ -1,21 +1,20 @@
 import React, { useState } from "react";
 import {Form} from './ContactForm.styled'
-import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from 'react-redux';
 // import { contactsSelector, addContact } from 'redux/contacts/contactsSlice';
 import { useAddContactMutation } from "redux/contacts/contactsSlice";
+import { toast } from "react-hot-toast";
 
 
 
-export const ContactForm = () => {
+export const ContactForm = ({contacts}) => {
 
   // const dispatch = useDispatch();
   // const contacts = useSelector(contactsSelector).contacts;
-  const contacts = [];
   const [addContact] = useAddContactMutation();
     
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const handleDataInput = (e) => {
       let { id, value } = e.target;
@@ -23,8 +22,8 @@ export const ContactForm = () => {
         case 'name':
           setName(value);
           break;
-        case 'number':
-          setNumber(value);
+        case 'phone':
+          setPhone(value);
           break;
         default:
           break;
@@ -33,16 +32,16 @@ export const ContactForm = () => {
   
   const handleAddingNewContact = async data => {
     try {
-      await addContact({ data });
+      await addContact(data);
+      toast.success(`Successfully added ${name}!`)
     } catch (error) {
       console.log(error);
     }
   };
 
     
-  const createNewContact = (name, number) => {
-    const id = nanoid();
-    let newContact = { id, name, number };
+  const createNewContact = (name, phone) => {
+    let newContact = { name, phone };
     // dispatch(addContact(newContact));
     handleAddingNewContact(newContact);
     reset();
@@ -53,13 +52,13 @@ export const ContactForm = () => {
       
       let normalizedName = name.toLowerCase();
       
-      !contacts.find((contact) => contact.name.toLowerCase() === normalizedName) ? createNewContact(name, number) : alert(`${name} is already in contacts.`);
+      !contacts.find((contact) => contact.name.toLowerCase() === normalizedName) ? createNewContact(name, phone) : toast.error(`${name} is already in contacts.`);
       e.target.name.focus();
     };
 
     const reset = () => {
       setName('');
-      setNumber('');
+      setPhone('');
     };
 
     
@@ -78,14 +77,14 @@ export const ContactForm = () => {
                 value={name}
                 onChange={handleDataInput}
               />
-              <label htmlFor='number'>Phone number</label>
+              <label htmlFor='phone'>Phone number</label>
               <input
                 type="tel"
                 pattern="\+?\d{1,4}?[ .\-\s]?\(?\d{1,3}?\)?[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,4}[ .\-\s]?\d{1,9}"
                 title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                 required
-                id='number'
-                value={number}
+                id='phone'
+                value={phone}
                 onChange={handleDataInput}
               />
               
