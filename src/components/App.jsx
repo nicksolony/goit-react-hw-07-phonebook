@@ -36,7 +36,7 @@ export const App = () => {
         />
         
         {isLoading ? (
-        <b>Загружаем материалы</b>
+        <ThreeDots/>
       ) : (
         <ContactList contacts={contacts} />
       )}
