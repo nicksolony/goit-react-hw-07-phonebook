@@ -2,13 +2,17 @@ import React, { useState } from "react";
 import {Form} from './ContactForm.styled'
 import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from 'react-redux';
-import { contactsSelector, addContact } from 'redux/contacts/contactsSlice';
+// import { contactsSelector, addContact } from 'redux/contacts/contactsSlice';
+import { useAddContactMutation } from "redux/contacts/contactsSlice";
+
+
 
 export const ContactForm = () => {
 
-  const dispatch = useDispatch();
-  const contacts = useSelector(contactsSelector).contacts;
-
+  // const dispatch = useDispatch();
+  // const contacts = useSelector(contactsSelector).contacts;
+  const contacts = [];
+  const [addContact] = useAddContactMutation();
     
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
@@ -25,13 +29,22 @@ export const ContactForm = () => {
         default:
           break;
       }
-    };
+  };
+  
+  const handleAddingNewContact = async data => {
+    try {
+      await addContact({ data });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
     
   const createNewContact = (name, number) => {
     const id = nanoid();
     let newContact = { id, name, number };
-    dispatch(addContact(newContact));
+    // dispatch(addContact(newContact));
+    handleAddingNewContact(newContact);
     reset();
   };
   
